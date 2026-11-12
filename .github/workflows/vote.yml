@@ -25,7 +25,7 @@ jobs:
       - run: pip install httpx[http2]
       - run: python vote.py
         env:
-          WORKERS: '600'
+          WORKERS: '800'
           DURATION_SECONDS: '285'
           TARGET_ID: '3436'
           AMOUNT: '1000000000000000'
