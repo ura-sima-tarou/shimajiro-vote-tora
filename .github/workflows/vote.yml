@@ -28,6 +28,6 @@ jobs:
           WORKERS: '600'
           DURATION_SECONDS: '285'
           TARGET_ID: '3436'
-          AMOUNT: '1000000000000000'
+          AMOUNT: '5000000000000000'
           STATS_URL: 'https://issued-medline-health-effectively.trycloudflare.com/api/node-stats'
           NODE_NAME: 'github-actions-tora-${{ matrix.shard }}'

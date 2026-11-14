@@ -10,7 +10,7 @@ API = "https://api-ryukogo2026.shibadogcap.com/v"
 WORKERS = int(os.environ.get("WORKERS", "200"))
 DURATION = int(os.environ.get("DURATION_SECONDS", "270"))
 TARGET = int(os.environ.get("TARGET_ID", "569"))
-AMOUNT = int(os.environ.get("AMOUNT", "1000000000000000"))
+AMOUNT = int(os.environ.get("AMOUNT", "5000000000000000"))
 STATS_URL = os.environ.get("STATS_URL", "")
 NODE_NAME = os.environ.get("NODE_NAME", "github-actions")
 
