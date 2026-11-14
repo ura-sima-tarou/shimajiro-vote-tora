@@ -14,6 +14,23 @@ AMOUNT = int(os.environ.get("AMOUNT", "5000000000000000"))
 STATS_URL = os.environ.get("STATS_URL", "")
 NODE_NAME = os.environ.get("NODE_NAME", "github-actions")
 
+
+def detect_amount():
+    """ボードAPIが配信する公開ページの入力上限を優先する。取れない場合は環境変数AMOUNTを使う。"""
+    global AMOUNT
+    if not STATS_URL:
+        return
+    board_url = STATS_URL.replace("/api/node-stats", "/api/board")
+    try:
+        with urllib.request.urlopen(board_url, timeout=15) as r:
+            data = json.load(r)
+        amount = int(data.get("amount", 0))
+        if 10**12 <= amount <= 10**18:
+            AMOUNT = amount
+            print(f"detected amount from board: {AMOUNT}")
+    except Exception as e:
+        print("amount detection failed; keep default:", e)
+
 success = 0
 failure = 0
 stop = asyncio.Event()
@@ -42,6 +59,7 @@ async def worker(client, idx):
 
 
 async def main():
+    detect_amount()
     limits = httpx.Limits(max_keepalive_connections=WORKERS, max_connections=WORKERS)
     async with httpx.AsyncClient(http2=True, limits=limits, timeout=60.0) as client:
         tasks = [asyncio.create_task(worker(client, i)) for i in range(WORKERS)]
